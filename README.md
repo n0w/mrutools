@@ -21,8 +21,7 @@ Some of the future features will be:
 - setup.py install script (automagic dependencies install)
 - Plugins, plugins for everything: vlc, dragonplayer, gnome apps (I'm more a kde user myself :P).
 
-How it works?
-=============
+##How it works?
 
 MRUTools is built upon a simple plugin structure. I know there are more serious and complex plugin architectures out there, but for out purposes (and for now) this will work.
 Each plugin resides in a folder named after itself, in the plugins folder.
@@ -33,8 +32,8 @@ Once every plugin has been executed, the main class process the gathered informa
 
 If you like the idea, suggest or write a plugin, new feature/whatever and pull request!
 
-Example output
-==============
+##Example output
+```
 n0w@nLap:~/Documents/LiClipse Workspace/mrutools/src$ python mrutools.py --stdout
 MRUTools - v0.3
            Angel Suarez-B (n0w) 
@@ -153,3 +152,4 @@ MRUTools - v0.3
  |  Last Access Date: 2015-03-21 20:21:02
  |  URL: file:///home/n0w/Master/Analisis%20Forense/Linux/screenshots/
  |  Last opened with: gwenview
+```
