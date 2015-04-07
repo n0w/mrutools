@@ -10,8 +10,9 @@ import time
 # TODO: Use colorama to eye-candify output
 #       https://pypi.python.org/pypi/colorama
 #
-# TODO: Unify date representation format
-
+# TODO: Unify date representation format -DONE
+# TODO: Timeline
+# TODO: Rethink MRU list implementation; JSON? We need to know which plugin stores what.
 
 #VLC Plugin:
     #n0w@n0wDesk:~$ cat .config/vlc/vlc-qt-interface.conf 
@@ -74,10 +75,10 @@ class MRUTools:
             
             myRep = PDFExport.Reporter(self.MRUList, fileName)
             
-
-            #for pluginResult in self.MRUList:
-            #    for element in pluginResult:
-            #        element.show()
+        if self.outputMode == "stdout":
+            for pluginResult in self.MRUList:
+                for element in pluginResult:
+                    element.show()
         
     def showBanner(self):
         print "MRUTools - v" + __VERSION__
@@ -102,7 +103,7 @@ class MRUTools:
 
 if __name__ == "__main__":
     # Get output to screen or file... or who knows? :D
-    # TODO: Use argparse instead!!
+    # TODO: This is quick'n'dirty: Use argparse instead!!
     if len(sys.argv) > 1:
         if (sys.argv[1] == "--stdout"):
             myMRU = MRUTools("stdout")
