@@ -25,10 +25,10 @@ Some of the future features will be:
 
 MRUTools is built upon a simple plugin structure. I know there are more serious and complex plugin architectures out there, but for out purposes (and for now) this will work.
 Each plugin resides in a folder named after itself, in the plugins folder.
-The main class loads and executes the __init__.py file found inside each folder, while passing it a list with the information that has been found at the moment (this I need to improve).
+The main class loads and executes the \__init__.py file found inside each folder, while passing it a list with the information that has been found at the moment.
 The loaded plugin then extracts the MRU information, appends it to the current list and finishes execution.
 
-Once every plugin has been executed, the main class process the gathered information and renders the desired output.
+Once every plugin has been executed, the main class processes the gathered information and renders the desired output.
 
 If you like the idea, suggest or write a plugin, new feature/whatever and pull request!
 
