@@ -8,8 +8,8 @@ import time
 import dateutil.parser
        
 class GwenviewPlugin:
-    def __init__(self, incomingList):
-        # incomingList var is list object coming from main module.
+    def __init__(self, incomingDict):
+        # incomingDict var is dictionary object coming from main module.
         # here we extract and append MRUs from KDE
         self.MRUList = []
         self.MRUPath = environ['HOME']+"/.kde/share/apps/gwenview/recentfolders/"
@@ -17,7 +17,7 @@ class GwenviewPlugin:
         print "running...",
 
         self.getMRUList()
-        incomingList.append(self.MRUList)
+        incomingDict['gwenview'] = self.MRUList
 
         print "[OK: retrieved %d elements]" % len(self.MRUList)
 

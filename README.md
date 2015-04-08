@@ -21,12 +21,12 @@ Some of the future features will be:
 - setup.py install script (automagic dependencies install)
 - Plugins, plugins for everything: vlc, dragonplayer, gnome apps (I'm more a kde user myself :P).
 
-##How it works?
+##How does it work?
 
 MRUTools is built upon a simple plugin structure. I know there are more serious and complex plugin architectures out there, but for out purposes (and for now) this will work.
 Each plugin resides in a folder named after itself, in the plugins folder.
-The main class loads and executes the \__init__.py file found inside each folder, while passing it a list with the information that has been found at the moment.
-The loaded plugin then extracts the MRU information, appends it to the current list and finishes execution.
+The main class loads and executes the \__init__.py file found inside each folder, while passing it a dictionary with the information that has been found at the moment.
+The loaded plugin then extracts the MRU information, appends it to the current list, adds the new key:list pair to the dictionary and finishes execution.
 
 Once every plugin has been executed, the main class processes the gathered information and renders the desired output.
 

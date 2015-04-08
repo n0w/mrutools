@@ -7,8 +7,8 @@ import time, datetime
 from MRUModules import mruOBJ
         
 class KDEPlugin:
-    def __init__(self, incomingList):
-        # incomingList var is list object coming from main module.
+    def __init__(self, incomingDict):
+        # incomingDict var is list object coming from main module.
         # here we extract and append MRUs from KDE
         self.MRUList = []
         self.MRUPath = environ['HOME']+"/.kde/share/apps/RecentDocuments/"
@@ -16,7 +16,7 @@ class KDEPlugin:
         print "running...",
 
         self.getMRUList()
-        incomingList.append(self.MRUList)
+        incomingDict['kde'] = self.MRUList
 
         print "[OK: retrieved %d elements]" % len(self.MRUList)
 

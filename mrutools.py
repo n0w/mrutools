@@ -52,8 +52,9 @@ class MRUTools:
 
         # MRU Stuff
         # =========
-        # MRUList: Contains lists of MRUObjs
-        self.MRUList = []
+        # MRUDict: Key is plugin name
+        #
+        self.MRUDict = {}
 
         # Go go go!
         self.go()
@@ -65,7 +66,7 @@ class MRUTools:
         for plugin in self.plugins:
             print " |---> "+ plugin["name"] + "...",
             loadedPlugin = self.loadPlugin(plugin)
-            loadedPlugin.run(self.MRUList)
+            loadedPlugin.run(self.MRUDict)
             self.loadedPlugins.append(loadedPlugin)
 
         if self.outputMode == "pdf":
@@ -73,10 +74,14 @@ class MRUTools:
             print " |"
             print "[+] Writing to disk: %s" % fileName
             
-            myRep = PDFExport.Reporter(self.MRUList, fileName)
+            myRep = PDFExport.Reporter(self.MRUDict, fileName)
             
         if self.outputMode == "stdout":
-            for pluginResult in self.MRUList:
+            print " |"
+            print "[+] Writing report to stdout"
+            print " | "
+            for pluginName,pluginResult in self.MRUDict.iteritems():
+                print "[+> Plugin: " + pluginName + "]"
                 for element in pluginResult:
                     element.show()
         
