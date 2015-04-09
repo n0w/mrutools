@@ -15,14 +15,14 @@ import time
 
 
 class Reporter:
-    def __init__(self, MRUList, fileName):
+    def __init__(self, MRUDict, fileName):
         self.PAGE_HEIGHT = defaultPageSize[1]
         self.PAGE_WIDTH = defaultPageSize[0]
         self.IMG_LOGO = "resources/logo.png"
         self.styles = getSampleStyleSheet()
         self.Title = "MRUTools Forensics Report"
         self.Subtitle = "Generated on " + time.ctime()
-        self.go(MRUList,fileName)
+        self.go(MRUDict,fileName)
     
     def myFirstPage(self, canvas, doc):
         canvas.saveState()
@@ -42,13 +42,14 @@ class Reporter:
         canvas.drawString(inch, 0.75 * inch, "%s Page %d" % (self.Title, doc.page))
         canvas.restoreState()
         
-    def go(self, MRUList, fileName):
+    def go(self, MRUDict, fileName):
         doc = SimpleDocTemplate(fileName)
         Story = [Spacer(1, 0.5 * inch)]
         style = self.styles["Normal"]
-                      
-        for pluginResult in MRUList:
-            header = "TODO: Add Plugin Name on MRUList Element"
+        pos = 0
+             
+        for pluginName,pluginResult in MRUDict.iteritems():         
+            header = str(pos) + ". " + pluginName
             p = Paragraph(header, style)
             Story.append(p)
             Story.append(Spacer(1, 0.2 * inch))
