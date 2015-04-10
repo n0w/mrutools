@@ -6,6 +6,7 @@ import sys
 from MRUModules import PDFExport
 import MRUModules
 import time
+import platform
 
 # TODO: Use colorama to eye-candify output
 #       https://pypi.python.org/pypi/colorama
@@ -56,10 +57,25 @@ class MRUTools:
         #
         self.MRUDict = {}
 
+        # Contains hardware, mem, proc, etc. info
+        self.systemInfo = []
+
         # Go go go!
         self.go()
+      
+    def getSystemInfo(self):
+        print "[+] Gathering system information...",   
+        kernelInfo = ""
+        for element in platform.uname(): 
+            kernelInfo = kernelInfo + " " + element 
+
+        self.systemInfo.append(kernelInfo)
+        print "[OK]"
 
     def go(self):
+
+        self.getSystemInfo()
+        
         self.getPlugins()
         print "[+] Found %d plugin(s)!" % len(self.plugins)
         
@@ -78,10 +94,24 @@ class MRUTools:
             
         if self.outputMode == "stdout":
             print " |"
-            print "[+] Writing report to stdout"
-            print " | "
+            print "[+] Writing report to stdout:\n"
+        
+            print "+---------------------------+"
+            print "| MRUTools Forensics Report |"
+            print "+---------------------------+"
+            print "\n * Generated on " + time.ctime() + "\n"
+            print " * System Information:"
+            
+            print "    > Kernel:" +  self.systemInfo[0]
+            print "    > Mem:"            
+            print "    > CPU:"
+            print "    > PCI:"
+            print "    > USB:"
+            print "\n * Recovered MRU Data:\n"
+            
             for pluginName,pluginResult in self.MRUDict.iteritems():
-                print "[+> Plugin: " + pluginName + "]"
+                print "[>]" + pluginName
+                print "-" * (len(pluginName) + 3)
                 for element in pluginResult:
                     element.show()
         
