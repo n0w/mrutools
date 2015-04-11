@@ -16,7 +16,7 @@ class mruClass:
         if self.name != "":
             print " |  Name: " + self.name
         if self.accessDate != "":
-            print " |   Last Access Date: " + str(self.accessDate)
+            print " |  Last Access Date: " + str(self.accessDate)
         if self.modifyDate != "":
             print " |  Last Modification Date: " + str(self.modifyDate)
         if self.URL != "":

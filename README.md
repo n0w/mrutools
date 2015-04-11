@@ -9,7 +9,7 @@ Each plugin extracts MRU information from certain applications or desktops.
 The application is yet on (early) active development. 
 
 Available features:
-- Two actual plugins written: kde and gwenview
+- Three actual plugins written: kde, gwenview and dragonplayer
 - PDF output
 - stdout output
 
@@ -19,11 +19,11 @@ Some of the future features will be:
 - Both forensic (information gathering and retrieval) and antiforensic (information tampering) modes.
 - Timeline charts, even plaso compatibility.
 - setup.py install script (automagic dependencies install)
-- Plugins, plugins for everything: vlc, dragonplayer, gnome apps (I'm more a kde user myself :P).
+- Plugins, plugins for everything: vlc, kate, gnome apps (I'm more a kde user myself :P).
 
 ##How does it work?
 
-MRUTools is built upon a simple plugin structure. I know there are more serious and complex plugin architectures out there, but for out purposes (and for now) this will work.
+MRUTools is built upon a simple plugin structure. I know there are more serious and complex plugin architectures out there, but for our purposes (and for now) this will work.
 Each plugin resides in a folder named after itself, in the plugins folder.
 The main class loads and executes the \__init__.py file found inside each folder, while passing it a dictionary with the information that has been found at the moment.
 The loaded plugin then extracts the MRU information, appends it to the current list, adds the new key:list pair to the dictionary and finishes execution.

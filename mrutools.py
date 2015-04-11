@@ -13,7 +13,9 @@ import platform
 #
 # TODO: Unify date representation format -DONE
 # TODO: Timeline
-# TODO: Rethink MRU list implementation; JSON? We need to know which plugin stores what.
+# TODO: Rethink MRU list implementation; JSON? We need to know which plugin stores what. - DONE
+# TODO: Specify if live system or disk image/whatever via command-line
+# TODO: Consider if having name and url attributes is really necessary
 
 #VLC Plugin:
     #n0w@n0wDesk:~$ cat .config/vlc/vlc-qt-interface.conf 
@@ -24,6 +26,8 @@ import platform
 
     #[RecentsMRL]
     #list=file:///media/denna/dl/seeding/Peliculas/Crash%20(2004)/Crash.2004.720p.BluRay.x264.YIFY.mp4, file:///media/denna/dl/seeding/Peliculas/Blue%20Jasmine%20(2013)/Blue.Jasmine.2013.720p.BluRay.x264.YIFY.mp4
+
+# tons of interesting files: n0w@nLap:~/.kde/share/config$ 
 
 # Dragon Player
 # Mucha mas informacion de la que muestra. No borra ;)
