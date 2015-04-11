@@ -15,14 +15,14 @@ import time
 
 
 class Reporter:
-    def __init__(self, MRUDict, fileName):
+    def __init__(self, MRUDict, systemInfo, fileName):
         self.PAGE_HEIGHT = defaultPageSize[1]
         self.PAGE_WIDTH = defaultPageSize[0]
         self.IMG_LOGO = "resources/logo.png"
         self.styles = getSampleStyleSheet()
         self.Title = "MRUTools Forensics Report"
         self.Subtitle = "Generated on " + time.ctime()
-        self.go(MRUDict,fileName)
+        self.go(MRUDict,systemInfo, fileName)
     
     def myFirstPage(self, canvas, doc):
         canvas.saveState()
@@ -42,21 +42,50 @@ class Reporter:
         canvas.drawString(inch, 0.75 * inch, "%s Page %d" % (self.Title, doc.page))
         canvas.restoreState()
         
-    def go(self, MRUDict, fileName):
+    def go(self, MRUDict, systemInfo, fileName):
         doc = SimpleDocTemplate(fileName)
         Story = [Spacer(1, 0.5 * inch)]
         style = self.styles["Normal"]
-        pos = 0
-             
+        pos = 1
+        
+        # Machine information
+        header = "<strong>Machine Information</strong>" + "<br/>"
+        p = Paragraph(header, style)
+        Story.append(p)
+
+        for element in systemInfo:         
+            content = element + "<br/>"
+            p = Paragraph(content,style)
+            Story.append(p)
+
+        Story.append(Spacer(1, 0.2 * inch))
+        
+        # Plugin information
+        header = "<strong>Executive Summary</strong>" + "<br/>"
+        p = Paragraph(header, style)
+        Story.append(p)
+        
         for pluginName,pluginResult in MRUDict.iteritems():         
-            header = str(pos) + ". " + pluginName
+            content = "   - " + pluginName + ": " + str(len(pluginResult)) + " extracted elements"+ "<br/>"
+            p = Paragraph(content,style)
+            Story.append(p)
+            
+        Story.append(Spacer(1, 0.2 * inch))
+        
+        # MRU Data
+        header = "<strong>MRU Data</strong>" + "<br/><br/>"
+        p = Paragraph(header, style)
+        Story.append(p)
+                     
+        for pluginName,pluginResult in MRUDict.iteritems():         
+            header = "<strong>" + str(pos) + ". " + pluginName + "</strong>"
+            pos += 1
             p = Paragraph(header, style)
             Story.append(p)
-            Story.append(Spacer(1, 0.2 * inch))
+           
             
             for element in pluginResult:
-                content = "<strong>Name:</strong> " + element.name + "<br />"\
-                        + "<strong>URL:</strong> " + element.URL  + "<br />"\
+                content = "<strong>URL:</strong> " + element.URL  + "<br />"\
                         + "<strong>Last Access Date:</strong> " + str(element.accessDate) + "<br />"\
                         + "<strong>Last Application:</strong> " + element.lastApp
                 p = Paragraph(content, style)

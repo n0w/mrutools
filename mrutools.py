@@ -90,11 +90,11 @@ class MRUTools:
             self.loadedPlugins.append(loadedPlugin)
 
         if self.outputMode == "pdf":
-            fileName = "MRUtools report %s" % time.ctime()
+            fileName = "MRUtools report %s.pdf" % time.ctime()
             print " |"
             print "[+] Writing to disk: %s" % fileName
             
-            myRep = PDFExport.Reporter(self.MRUDict, fileName)
+            myRep = PDFExport.Reporter(self.MRUDict, self.systemInfo, fileName)
             
         if self.outputMode == "stdout":
             print " |"
