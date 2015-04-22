@@ -23,34 +23,40 @@ class KDEPlugin:
     def getMRUList(self):
         fileList = [ f for f in listdir(self.MRUPath) if isfile(join(self.MRUPath,f)) ]
         
+
         for foundFile in fileList:
-            f = open(self.MRUPath+foundFile)
+            try:
+                f = open(self.MRUPath+foundFile)
+                # Extract info from within the file
+                for line in f:
+                    # Clear trailing whitespaces
+                    line = line.rstrip()
+                    if line[0:4] == "Name":
+                        tempMRU.name = line.split("=")[1]
+                    if line[0:3] == "URL":
+                        tempMRU.URL = line.split("=")[1]
+                    if line[0:20] == "X-KDE-LastOpenedWith":
+                        tempMRU.lastApp = line.split("=")[1]
+    
+                f.close()
+                
+                # Extract date info from OS (epoch)
+                # then convert them to datetime objects
+                epochTime = getatime(self.MRUPath+foundFile)
+                tempMRU.accessDate = datetime.datetime.fromtimestamp(epochTime)
+                
+                epochTime = getmtime(self.MRUPath+foundFile)
+                tempMRU.modifyDate = datetime.datetime.fromtimestamp(epochTime)
+                
+                # Append new element to internal list
+                self.MRUList.append(tempMRU)
+
+            except Exception,e:
+                print "\n |(!)-> {}".format(e)
             tempMRU = mruOBJ.mruClass()
 
-            # Extract info from within the file
-            for line in f:
-                # Clear trailing whitespaces
-                line = line.rstrip()
-                if line[0:4] == "Name":
-                    tempMRU.name = line.split("=")[1]
-                if line[0:3] == "URL":
-                    tempMRU.URL = line.split("=")[1]
-                if line[0:20] == "X-KDE-LastOpenedWith":
-                    tempMRU.lastApp = line.split("=")[1]
 
-            f.close()
             
-            # Extract date info from OS (epoch)
-            # then convert them to datetime objects
-            epochTime = getatime(self.MRUPath+foundFile)
-            tempMRU.accessDate = datetime.datetime.fromtimestamp(epochTime)
-            
-            epochTime = getmtime(self.MRUPath+foundFile)
-            tempMRU.modifyDate = datetime.datetime.fromtimestamp(epochTime)
-            
-            # Append new element to internal list
-            self.MRUList.append(tempMRU)
-
             # DEBUG - Show it!
             # tempMRU.DEBUG_Show()
             

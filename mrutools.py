@@ -11,13 +11,10 @@ import platform
 # TODO: Use colorama to eye-candify output
 #       https://pypi.python.org/pypi/colorama
 #
-# TODO: Unify date representation format -DONE
 # TODO: Timeline
-# TODO: Rethink MRU list implementation; JSON? We need to know which plugin stores what. - DONE
-# TODO: Specify if live system or disk image/whatever via command-line
 # TODO: Consider if having name and url attributes is really necessary
 
-#VLC Plugin:
+# TODO: VLC Plugin:
     #n0w@n0wDesk:~$ cat .config/vlc/vlc-qt-interface.conf 
     #[General]
     #IsFirstRun=0
@@ -35,25 +32,21 @@ import platform
 
 __VERSION__ = "0.3"
 __AUTHOR__ = "           Angel Suarez-B (n0w)"
-__DATE__ = "19/03/2015"
+__DATE__ = "22/04/2015"
 
 class MRUTools:
-    def __init__(self,outputMode):
+    def __init__(self, args):
         # Plugin & Init Stuff
         # ===================
         self.PluginFolder = "./plugins"
         self.MainModule = "__init__"
-        self.outputMode = outputMode
         self.showBanner()
         self.plugins = []
         self.loadedPlugins = []
+        self.args = args
         
         # Set hook to colored_traceback
         colored_traceback.add_hook()
-
-        if self.outputMode == "usage":
-            print "Usage: ./mrutools.py --[stdout,file]"
-            exit(-1)
 
         # MRU Stuff
         # =========
@@ -77,10 +70,9 @@ class MRUTools:
         print "[OK]"
 
     def go(self):
-
         self.getSystemInfo()
-        
         self.getPlugins()
+        
         print "[+] Found %d plugin(s)!" % len(self.plugins)
         
         for plugin in self.plugins:
@@ -88,15 +80,20 @@ class MRUTools:
             loadedPlugin = self.loadPlugin(plugin)
             loadedPlugin.run(self.MRUDict)
             self.loadedPlugins.append(loadedPlugin)
+        
+        self.output(args.output)
 
-        if self.outputMode == "pdf":
+    def output(self,outputMode):
+        # PDF ----------------------------------------------------------------
+        if outputMode == "pdf":
             fileName = "MRUtools report %s.pdf" % time.ctime()
             print " |"
             print "[+] Writing to disk: %s" % fileName
             
             myRep = PDFExport.Reporter(self.MRUDict, self.systemInfo, fileName)
-            
-        if self.outputMode == "stdout":
+        
+        # stdout -------------------------------------------------------------    
+        elif outputMode == "stdout":
             print " |"
             print "[+] Writing report to stdout:\n"
         
@@ -118,12 +115,11 @@ class MRUTools:
                 print "-" * (len(pluginName) + 3)
                 for element in pluginResult:
                     element.show()
-        
+
     def showBanner(self):
         print "MRUTools - v" + __VERSION__
         print __AUTHOR__ + " \n"
-        
-        
+          
     def getPlugins(self):
         dirList = os.listdir(self.PluginFolder)
         
@@ -141,16 +137,11 @@ class MRUTools:
 
 
 if __name__ == "__main__":
-    # Get output to screen or file... or who knows? :D
-    # TODO: This is quick'n'dirty: Use argparse instead!!
-    if len(sys.argv) > 1:
-        if (sys.argv[1] == "--stdout"):
-            myMRU = MRUTools("stdout")
-            exit(0)
-            
-        elif (sys.argv[1] == "--pdf"):
-            myMRU = MRUTools("pdf")
-            exit(0)
-
-    myMRU = MRUTools("usage")
+    parser = argparse.ArgumentParser()
+      
+    parser.add_argument("mode", choices=['live','mountpoint'], help="Extracts info from the current session or from a mounted hard disk.")
+    parser.add_argument("output", choices=['pdf','stdout'], help="Output report type.")
+    
+    args = parser.parse_args()
+    myMRU = MRUTools(args)
     
