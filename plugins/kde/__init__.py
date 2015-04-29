@@ -22,7 +22,7 @@ class KDEPlugin:
 
     def getMRUList(self):
         fileList = [ f for f in listdir(self.MRUPath) if isfile(join(self.MRUPath,f)) ]
-        
+        tempMRU = mruOBJ.mruClass()
 
         for foundFile in fileList:
             try:
@@ -53,7 +53,7 @@ class KDEPlugin:
 
             except Exception,e:
                 print "\n |(!)-> {}".format(e)
-            tempMRU = mruOBJ.mruClass()
+            
 
 
             

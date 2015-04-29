@@ -3,7 +3,7 @@ import imp
 import os
 import colored_traceback
 import sys
-from MRUModules import PDFExport
+from MRUModules import PDFExport,XMLExport
 import MRUModules
 import time
 import platform
@@ -116,6 +116,12 @@ class MRUTools:
                 for element in pluginResult:
                     element.show()
 
+        # stdout -------------------------------------------------------------    
+        elif outputMode == "xml":
+            print " |"
+            print "[+] Writing report to xml:\n"
+            xmlRep = XMLExport.XMLExporter(self.MRUDict,"test.xml")
+
     def showBanner(self):
         print "MRUTools - v" + __VERSION__
         print __AUTHOR__ + " \n"
@@ -140,7 +146,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
       
     parser.add_argument("mode", choices=['live','mountpoint'], help="Extracts info from the current session or from a mounted hard disk.")
-    parser.add_argument("output", choices=['pdf','stdout'], help="Output report type.")
+    parser.add_argument("output", choices=['pdf','stdout','xml'], help="Output report type.")
     
     args = parser.parse_args()
     myMRU = MRUTools(args)

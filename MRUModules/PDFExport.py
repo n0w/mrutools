@@ -3,8 +3,6 @@ Created on Mar 22, 2015
 
 @author: n0w
 '''
-# Sample platypus document
-# From the FAQ at reportlab.org/oss/rl-toolkit/faq/#1.1
 
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -12,7 +10,6 @@ from reportlab.rl_config import defaultPageSize
 from reportlab.lib.units import inch
 
 import time
-
 
 class Reporter:
     def __init__(self, MRUDict, systemInfo, fileName):
