@@ -22,11 +22,11 @@ class KDEPlugin:
 
     def getMRUList(self):
         fileList = [ f for f in listdir(self.MRUPath) if isfile(join(self.MRUPath,f)) ]
-        tempMRU = mruOBJ.mruClass()
 
         for foundFile in fileList:
             try:
                 f = open(self.MRUPath+foundFile)
+                tempMRU = mruOBJ.mruClass()
                 # Extract info from within the file
                 for line in f:
                     # Clear trailing whitespaces
@@ -50,15 +50,15 @@ class KDEPlugin:
                 
                 # Append new element to internal list
                 self.MRUList.append(tempMRU)
-
+                # DEBUG - Show it!
+                #tempMRU.show()
             except Exception,e:
                 print "\n |(!)-> {}".format(e)
             
 
 
             
-            # DEBUG - Show it!
-            # tempMRU.DEBUG_Show()
+
             
 def run(incomingList):
     myKDE = KDEPlugin(incomingList)

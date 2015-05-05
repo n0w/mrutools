@@ -24,7 +24,14 @@ class XMLExporter:
         self.addEvents(MRUDict)
         
         # Make output a little prettier by adding spaces and indentation
-        print self.prettify()
+        output = self.prettify()
+        
+        # Write file to disk
+        f = open(fileName, 'w')
+        f.write(output.encode('utf8'))
+        f.close()
+        
+        print "[OK]"
         
         pass
     
@@ -81,7 +88,7 @@ class XMLExporter:
                 newEvent = SubElement(events, "event")
                 SubElement(newEvent, "start").text = str(trimmedDate)
                 SubElement(newEvent, "end").text = str(trimmedDate)
-                SubElement(newEvent, "text").text = element.URL
+                SubElement(newEvent, "text").text = unicode(element.URL, "utf-8")
                 SubElement(newEvent, "progress").text = "100"
                 SubElement(newEvent, "fuzzy").text = "False"   
                 SubElement(newEvent, "locked").text = "False"

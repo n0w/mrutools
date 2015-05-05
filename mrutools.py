@@ -73,6 +73,7 @@ class MRUTools:
         self.getSystemInfo()
         self.getPlugins()
         
+        print " |"
         print "[+] Found %d plugin(s)!" % len(self.plugins)
         
         for plugin in self.plugins:
@@ -119,7 +120,7 @@ class MRUTools:
         # stdout -------------------------------------------------------------    
         elif outputMode == "xml":
             print " |"
-            print "[+] Writing report to xml:\n"
+            print "[+] Writing report to xml...",
             xmlRep = XMLExport.XMLExporter(self.MRUDict,"test.xml")
 
     def showBanner(self):
